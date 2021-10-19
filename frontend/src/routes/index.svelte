@@ -1,6 +1,6 @@
 <script lang="ts" conext="module">
     import type { Load } from '@sveltejs/kit';
-    import type { Post } from '$lib/types';
+    import type { Post } from '$lib/Types';
     import { goto } from '$app/navigation';
 
     export const load: Load = async ({ fetch }) => {
@@ -10,7 +10,7 @@
       return { props: {posts: data } };
     };
     
-    export let poasts: any
+    export let posts: Post[];
 </script>
 
 
@@ -18,4 +18,14 @@
   <h1 class="text-center text-3xl font-bold">
     My wonderful blog
   </h1>
+</div>
+
+<div class="container mx-auto mt4">
+  {#each posts as post}
+    <div class="hover:bg-gray-200 cursor-pointer px-6 py-2 border-b border-gray-500" on:click={() => goto("/blog" + post.id)}>
+      <h4 class="font-bold">{post.title}</h4>
+      <p class="mt-2 text-gray-800">{post.description}</p>
+      <p class="text-gray-500">{post.author.username}</p>
+    </div>
+  {/each}
 </div>
